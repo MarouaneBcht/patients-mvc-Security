@@ -26,26 +26,15 @@ public class SecurityConfig {
         return new InMemoryUserDetailsManager(user,admin);
 
     }
-
-
-
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception{
-
-
         http.formLogin() ;
         http.authorizeRequests((request)->request.requestMatchers("/ /**","/editPatient/**","/save").hasRole("ADMIN"));
-
         http.authorizeRequests((request)->request.requestMatchers("/").permitAll());
-
         http.authorizeRequests().anyRequest().authenticated();
-
         http.exceptionHandling().accessDeniedPage("/403");
-
         return  http.build();
-
     }
-
     @Bean
     PasswordEncoder passwordEncoder(){
         return  new BCryptPasswordEncoder();
